@@ -1,62 +1,204 @@
+import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../Authentication/AuthProvider/AuthProvider";
+
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut().then();
+  };
+
   const navbarPage = (
     <>
       <li>
-        <a>Item 1</a>
-      </li>
-      <li tabIndex={0}>
-        <details>
-          <summary>Parent</summary>
-          <ul className="p-2">
-            <li>
-              <a>Submenu 1</a>
-            </li>
-            <li>
-              <a>Submenu 2</a>
-            </li>
-          </ul>
-        </details>
+        <NavLink
+          to="/"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-violet-400 underline" : ""
+          }
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <a>Item 3</a>
+        <NavLink
+          to="/services"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-violet-400 underline" : ""
+          }
+        >
+          Services
+        </NavLink>
       </li>
+      {user && (
+        <li tabIndex={0} style={{ zIndex: 9999 }} className="w-36">
+          <details>
+            <summary>Dash Board</summary>
+            <ul className="">
+              <li className="">
+                <NavLink
+                  to="/myServices"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-violet-400 underline"
+                      : "w-28"
+                  }
+                >
+                  My Services
+                </NavLink>
+              </li>
+              <li className="">
+                <NavLink
+                  to="/addServices"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-violet-400 underline"
+                      : "w-28"
+                  }
+                >
+                  Add Services
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/mySchedule"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-violet-400 underline"
+                      : ""
+                  }
+                >
+                  My Schedules
+                </NavLink>
+              </li>
+            </ul>
+          </details>
+        </li>
+      )}
+      {user && (
+        <li>
+          <NavLink
+            to="/manageServices"
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "pending"
+                : isActive
+                ? "text-violet-400 underline"
+                : ""
+            }
+          >
+            Manage Services
+          </NavLink>
+        </li>
+      )}
     </>
   );
 
   return (
-    <div className="navbar fixed z-10 bg-opacity-40 text-white bg-black max-w-screen-xl mx-auto ">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            {navbarPage}
-          </ul>
+    <div>
+      <div className="navbar bg-base-100 shadow-md">
+        <div className="navbar-start">
+          <NavLink className="btn btn-ghost normal-case text-xl" to="/">
+            Repair Service Hub
+          </NavLink>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">Bistro Boss</a>
-      </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{navbarPage}</ul>
-      </div>
-      <div className="navbar-end">
-        <a className="btn">Button</a>
+
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">{navbarPage}</ul>
+        </div>
+        <div className="navbar-end hidden lg:flex">
+          {user ? (
+            <div className="flex items-center">
+              {user.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  alt={`${user.displayName}'s profile`}
+                  className="w-10 h-10 rounded-full mr-2"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-gray-500 mr-2"></div>
+              )}
+              <p className="mr-2">{user.displayName}</p>
+              {/* <p>{user.email}</p> */}
+              <button onClick={handleLogOut} className="btn btn-primary ml-2">
+                Log Out
+              </button>
+            </div>
+          ) : (
+            <NavLink to="logIn">
+              <a className="btn bg-violet-400 rounded text-black hover:text-white">
+                Log In
+              </a>
+            </NavLink>
+          )}
+        </div>
+        {/* this is for showen name and img when login */}
+        <div className="lg:hidden  ">
+          {user?.photoURL ? (
+            <div className="">
+              <img
+                src={user.photoURL}
+                className="w-10 h-10 rounded-full ml-24 -mr-20"
+              />
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <div className="dropdown lg:hidden ">
+          <div className="flex  ml-24 ">
+            <button className="btn btn-square btn-ghost">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block w-5 h-5 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <div className="mr-40">
+            <ul
+              tabIndex={0}
+              className="menu dropdown-content mt-3 shadow bg-base-100 rounded-box "
+              style={{ zIndex: 9999 }}
+            >
+              {navbarPage}
+              <div className="navbar-end">
+                {user ? (
+                  <div className=" ml-6  ">
+                    <p className="">{user.displayName}</p>
+                    <button
+                      onClick={handleLogOut}
+                      className="btn btn-xs btn-error my-2  w-24 "
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                ) : (
+                  <NavLink to="logIn">
+                    <a className="btn btn-xs bg-violet-400 rounded text-black hover:text-white w-16 ">
+                      Log In
+                    </a>
+                  </NavLink>
+                )}
+              </div>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
