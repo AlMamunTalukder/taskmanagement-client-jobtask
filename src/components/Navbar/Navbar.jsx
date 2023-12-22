@@ -32,60 +32,9 @@ const Navbar = () => {
         </NavLink>
       </li>
       {user && (
-        <li tabIndex={0} style={{ zIndex: 9999 }} className="w-36">
-          <details>
-            <summary>Dash Board</summary>
-            <ul className="">
-              <li className="">
-                <NavLink
-                  to="/myServices"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "pending"
-                      : isActive
-                      ? "text-violet-400 underline"
-                      : "w-28"
-                  }
-                >
-                  My Services
-                </NavLink>
-              </li>
-              <li className="">
-                <NavLink
-                  to="/addServices"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "pending"
-                      : isActive
-                      ? "text-violet-400 underline"
-                      : "w-28"
-                  }
-                >
-                  Add Services
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/mySchedule"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "pending"
-                      : isActive
-                      ? "text-violet-400 underline"
-                      : ""
-                  }
-                >
-                  My Schedules
-                </NavLink>
-              </li>
-            </ul>
-          </details>
-        </li>
-      )}
-      {user && (
         <li>
           <NavLink
-            to="/manageServices"
+            to="/dashboard"
             className={({ isActive, isPending }) =>
               isPending
                 ? "pending"
@@ -94,7 +43,7 @@ const Navbar = () => {
                 : ""
             }
           >
-            Manage Services
+            Dash Board
           </NavLink>
         </li>
       )}
@@ -106,7 +55,7 @@ const Navbar = () => {
       <div className="navbar bg-base-100 shadow-md">
         <div className="navbar-start">
           <NavLink className="btn btn-ghost normal-case text-xl" to="/">
-            Repair Service Hub
+            Task Management
           </NavLink>
         </div>
 

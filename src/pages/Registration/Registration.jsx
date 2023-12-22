@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "./../PrivateRouter/AuthProvider";
+
 import swal from "sweetalert";
+import { AuthContext } from "../../Authentication/AuthProvider/AuthProvider";
 
 const Registration = () => {
   const [email, setEmail] = useState("");
